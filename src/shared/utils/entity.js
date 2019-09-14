@@ -1,4 +1,4 @@
-import { Vect } from './math'
+import { Vect } from 'shared/utils/math'
 
 export class Trait {
   constructor(name) {
@@ -12,8 +12,8 @@ export class Trait {
 
 export default class Entity {
   constructor() {
-    this.pos = new Vect(0, 0);
-    this.vel = new Vect(0, 0);
+    this.pos = new Vect(0, 0)
+    this.vel = new Vect(0, 0)
 
     this.traits = []
   }
