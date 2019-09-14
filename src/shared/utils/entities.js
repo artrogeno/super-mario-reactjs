@@ -1,4 +1,6 @@
 import Entity from 'shared/utils/entity'
+import Velocity from 'shared/utils/traits/velocity'
+import Jump from 'shared/utils/traits/jump'
 import { loadMarioSprite } from 'shared/utils/sprites'
 import characters from 'assets/images/characters.gif'
 
@@ -6,17 +8,13 @@ export const createMario = async () => {
   const sprite = await loadMarioSprite(characters)
 
   const mario = new Entity()
-    // mario.position.set(64, 180)
-    // mario.velocity.set(2, -10)
 
-    mario.draw = function drawMario(context) {
-      sprite.draw('idle', context, this.position.x, this.position.y)
-    }
+  mario.addTrait(new Velocity())
+  mario.addTrait(new Jump())
 
-    mario.update = function updateMario(deltaTime) {
-      this.position.x += this.velocity.x * deltaTime
-      this.position.y += this.velocity.y * deltaTime
-    }
+  mario.draw = function drawMario(context) {
+    sprite.draw('idle', context, this.pos.x, this.pos.y)
+  }
 
-    return mario
+  return mario
 }

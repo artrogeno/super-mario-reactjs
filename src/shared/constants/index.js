@@ -1,3 +1,4 @@
 import SCREENS from './screens';
+import KEYS from './keys';
 
-export { SCREENS };
+export { SCREENS, KEYS };

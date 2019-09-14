@@ -15,3 +15,4 @@ export const loadMarioSprite = async characters => {
   sprites.define('idle', 276, 44, 16, 16)
   return sprites
 }
+

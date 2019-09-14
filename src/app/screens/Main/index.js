@@ -6,16 +6,16 @@ import { loadBackgroundSprites } from 'shared/utils/sprites'
 import { createMario } from 'shared/utils/entities'
 import { Compositor } from 'shared/utils/compositor'
 import Timer from 'shared/utils/timer'
+import Keyboard from 'shared/utils/keyboardstate'
 
 import { SCREENS } from 'shared/constants'
 import tiles from 'assets/images/tiles.png'
-
-
 
 const Main = () => {
   const canvasRef = useRef(null)
 
   async function loadCanvas () {
+
     const canvas = canvasRef.current
     const context = canvas.getContext('2d')
 
@@ -30,23 +30,34 @@ const Main = () => {
     const backgroundLayer = createBackgroundLayer(level.backgrounds, backgroundSprites)
     compositor.layers.push(backgroundLayer)
 
-    // test
-    let gravity = 30
-    mario.position.set(64, 180)
-    mario.velocity.set(200, -600)
+    let gravity = 2000
+    mario.pos.set(64, 180)
+    // mario.vel.set(200, -600)
+
+    const SPACE = 32
+    const input = new Keyboard();
+    input.addMapping(SPACE, keyState => {
+      if (keyState) {
+        mario.jump.start()
+      } else {
+        mario.jump.cancel()
+      }
+    })
+    input.listenTo(window)
 
     const spriteLayer = createSpriteLayer(mario)
     compositor.layers.push(spriteLayer)
 
     const timer = new Timer(1/60)
-
     timer.update = function update(deltaTime) {
+      mario.update(deltaTime)
+
       compositor.draw(context)
-      mario.update( deltaTime )
-      mario.velocity.y += gravity
+
+      mario.vel.y += gravity * deltaTime
     }
 
-    timer.start()
+    // timer.start()
 
   }
 
