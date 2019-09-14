@@ -24,10 +24,8 @@ export const createBackgroundLayer = (backgrounds, sprites) => {
   }
 }
 
-export const createSpriteLayer = (sprite, position) => {
+export const createSpriteLayer = (entity) => {
   return function drawSpriteLayer(context) {
-    for (let i = 0; i < 20; i++) {
-      sprite.draw('idle', context, (position.x + i * 16), position.y)
-    }
+    entity.draw(context)
   }
 }
