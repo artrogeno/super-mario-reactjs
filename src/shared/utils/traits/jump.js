@@ -6,7 +6,7 @@ export default class Jump extends Trait {
 
     this.duration = 0.5
     this.velocity = 200
-    this.engageTime = 0;
+    this.engageTime = 0
   }
 
   start() {
@@ -14,7 +14,7 @@ export default class Jump extends Trait {
   }
 
   cancel() {
-    this.engageTime = 0;
+    this.engageTime = 0
   }
 
   update(entity, deltaTime) {

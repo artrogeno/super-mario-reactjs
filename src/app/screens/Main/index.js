@@ -1,15 +1,11 @@
 import React, { useRef, useEffect } from 'react'
 
 import { loadLevel } from 'shared/utils/loaders'
-import { createBackgroundLayer, createSpriteLayer } from 'shared/utils/layers'
-import { loadBackgroundSprites } from 'shared/utils/sprites'
 import { createMario } from 'shared/utils/entities'
-import { Compositor } from 'shared/utils/compositor'
+import { setupKeyboard } from 'shared/utils/input'
 import Timer from 'shared/utils/timer'
-import Keyboard from 'shared/utils/keyboardstate'
 
 import { SCREENS } from 'shared/constants'
-import tiles from 'assets/images/tiles.png'
 
 const Main = () => {
   const canvasRef = useRef(null)
@@ -18,45 +14,25 @@ const Main = () => {
     const canvas = canvasRef.current
     const context = canvas.getContext('2d')
 
-    const [mario, backgroundSprites, level] = await Promise.all([
+    const [mario, level] = await Promise.all([
       createMario(),
-      loadBackgroundSprites(tiles),
       loadLevel('1-1'),
     ])
 
-    const compositor = new Compositor()
+    mario.pos.set(64, 64)
 
-    const backgroundLayer = createBackgroundLayer(level.backgrounds, backgroundSprites)
-    compositor.layers.push(backgroundLayer)
+    level.entities.add(mario)
 
-    const gravity = 2000
-    mario.pos.set(64, 180)
-    // mario.vel.set(200, -600)
-
-    const SPACE = 32
-    const input = new Keyboard()
-    input.addMapping(SPACE, keyState => {
-      if (keyState) {
-        mario.jump.start()
-      } else {
-        mario.jump.cancel()
-      }
-    })
+    const input = setupKeyboard(mario)
     input.listenTo(window)
-
-    const spriteLayer = createSpriteLayer(mario)
-    compositor.layers.push(spriteLayer)
 
     const timer = new Timer(1 / 60)
     timer.update = function update(deltaTime) {
-      mario.update(deltaTime)
+      level.update(deltaTime)
 
-      compositor.draw(context)
-
-      mario.vel.y += gravity * deltaTime
+      level.composition.draw(context)
     }
-
-    // timer.start()
+    timer.start()
   }
 
   useEffect(() => {

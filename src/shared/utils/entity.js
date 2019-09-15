@@ -14,6 +14,7 @@ export default class Entity {
   constructor() {
     this.pos = new Vect(0, 0)
     this.vel = new Vect(0, 0)
+    this.size = new Vect(0, 0)
 
     this.traits = []
   }
