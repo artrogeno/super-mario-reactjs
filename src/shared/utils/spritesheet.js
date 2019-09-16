@@ -35,6 +35,6 @@ export default class SpriteSheet {
 
 
   drawTile(name, context, x, y) {
-    this.draw(name, context, (x * 16), (y * 16))
+    this.draw(name, context, (x * this.width), (y * this.height))
   }
 }

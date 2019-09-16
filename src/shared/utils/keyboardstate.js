@@ -27,7 +27,6 @@ export default class KeyboardState {
     if (this.keyStates.get(code) === keyState) return
 
     this.keyStates.set(code, keyState)
-    // console.log(this.keyStates)
 
     this.keyMap.get(code)(keyState)
   }

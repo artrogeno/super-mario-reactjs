@@ -1,12 +1,12 @@
 export default class Timer {
-  constructor(deltaTime = 1/60 ) {
+  constructor(deltaTime = 1 / 60) {
     let accumulatedTime = 0
     let lastTime = 0
 
     this.updateProxey = (time) => {
-      accumulatedTime = (time - lastTime) / 1000;
+      accumulatedTime = (time - lastTime) / 1000
 
-      while (accumulatedTime > deltaTime ) {
+      while (accumulatedTime > deltaTime) {
         this.update(deltaTime)
         accumulatedTime -= deltaTime
       }

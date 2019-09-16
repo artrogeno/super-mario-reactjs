@@ -16,7 +16,8 @@ export const createMario = async () => {
   // mario.addTrait(new Velocity())
 
   mario.draw = function drawMario(context) {
-    sprite.draw('idle', context, this.pos.x, this.pos.y)
+    sprite.draw('idle', context, 0, 0)
+    // sprite.draw('idle', context, this.pos.x, this.pos.y)
   }
 
   return mario

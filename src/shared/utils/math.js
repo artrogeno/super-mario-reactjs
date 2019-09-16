@@ -13,8 +13,8 @@ export class Matrix {
 
   get(x, y) {
     const col = this.grid[x]
-    if (!col) return undefined
-    return col[y]
+    if (col) return col[y]
+    return undefined
   }
 
   set(x, y, value) {
