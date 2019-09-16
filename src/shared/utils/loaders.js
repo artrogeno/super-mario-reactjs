@@ -1,6 +1,7 @@
 import Level from 'shared/utils/level'
 import SpriteSheet from 'shared/utils/spritesheet'
 import { createBackgroundLayer, createSpriteLayer } from 'shared/utils/layers'
+import { createAnimation } from 'shared/utils/anime'
 
 const loadLavel = async (name) => {
   const result = await require(`../lavels/${name}.json`)
@@ -46,7 +47,7 @@ export const loadImage = async url => {
   return result
 }
 
-const loadStriteSheet = async (name) => {
+export const loadStriteSheet = async (name) => {
   const sheetSpec = await require(`../sprites/${name}.json`)
   const [sheet, image] = await Promise.all([
     sheetSpec,
@@ -54,9 +55,25 @@ const loadStriteSheet = async (name) => {
   ])
 
   const sprites = new SpriteSheet(image, sheet.tileW, sheet.tileH)
-  sheet.tiles.forEach(tile => {
-    sprites.defineTile(tile.name, tile.index[0], tile.index[1])
-  })
+
+  if (sheet.tiles) {
+    sheet.tiles.forEach(tileSpec => {
+      sprites.defineTile(tileSpec.name, tileSpec.index[0], tileSpec.index[1])
+    })
+  }
+
+  if (sheet.frames) {
+    sheet.frames.forEach(frameSpec => {
+      sprites.define(frameSpec.name, ...frameSpec.rect)
+    })
+  }
+
+  if (sheet.animations) {
+    sheet.animations.forEach(animateSpec => {
+      const animation = createAnimation(animateSpec.frames, animateSpec.frameLen)
+      sprites.defineAnimation(animateSpec.name, animation)
+    })
+  }
 
   return sprites
 }

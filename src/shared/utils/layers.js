@@ -11,7 +11,7 @@ export const createBackgroundLayer = (level, sprites) => {
   let startIndex
   let endIndex
   function redraw(drawFrom, drawTo) {
-    if (drawFrom === startIndex && drawTo === endIndex) return
+    // if (drawFrom === startIndex && drawTo === endIndex) return
 
     startIndex = drawFrom
     endIndex = drawTo
@@ -21,7 +21,11 @@ export const createBackgroundLayer = (level, sprites) => {
       if (col && col.length > 0) {
         // eslint-disable-next-line
         col.forEach((tile, y) => {
-          sprites.drawTile(tile.name, context, x - startIndex, y)
+          if (sprites.animations.has(tile.name)) {
+            sprites.drawAnimation(tile.name, context, x - startIndex, y, level.totalTime)
+          } else {
+            sprites.drawTile(tile.name, context, x - startIndex, y)
+          }
         })
       }
     }
