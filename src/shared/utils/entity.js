@@ -1,9 +1,16 @@
 import { Vect } from 'shared/utils/math'
 
+export const Sides = {
+  TOP: Symbol('top'),
+  BOTTOM: Symbol('bottom'),
+}
+
 export class Trait {
   constructor(name) {
     this.NAME = name
   }
+
+  obstruct() { }
 
   update() {
     console.log('Unhadled update call in Trait')
@@ -22,6 +29,12 @@ export default class Entity {
   addTrait(trait) {
     this.traits.push(trait)
     this[trait.NAME] = trait
+  }
+
+  obstruct(side) {
+    this.traits.forEach(trait => {
+      trait.obstruct(this, side)
+    })
   }
 
   update(deltaTime) {

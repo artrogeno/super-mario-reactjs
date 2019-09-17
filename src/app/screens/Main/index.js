@@ -4,7 +4,7 @@ import { loadLevel } from 'shared/utils/loaders'
 import { createMario } from 'shared/utils/entities'
 import { setupKeyboard } from 'shared/utils/input'
 // import { createCollisionLayer, createCameraLayer } from 'shared/utils/layers'
-import { setupMouseControl } from 'shared/utils/debug'
+// import { setupMouseControl } from 'shared/utils/debug'
 import Camera from 'shared/utils/camera'
 import Timer from 'shared/utils/timer'
 
@@ -40,12 +40,16 @@ const Main = () => {
     input.listenTo(window)
 
     // --- DEBUG START
-    setupMouseControl(canvas, mario, camera)
+    // setupMouseControl(canvas, mario, camera)
     // -- DEBUG END
 
     const timer = new Timer(1 / 60)
     timer.update = function update(deltaTime) {
       level.update(deltaTime)
+
+      if (mario.pos.x > 100) {
+        camera.pos.x = mario.pos.x - 100
+      }
 
       level.composition.draw(context, camera)
     }
