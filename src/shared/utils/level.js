@@ -1,6 +1,5 @@
 import Compositor from 'shared/utils/compositor'
 import TileCollider from 'shared/utils/tileCollider'
-import { Matrix } from 'shared/utils/math'
 
 export default class Level {
   constructor() {
@@ -8,9 +7,12 @@ export default class Level {
     this.totalTime = 0
     this.composition = new Compositor()
     this.entities = new Set()
-    this.tiles = new Matrix()
 
-    this.tileCollider = new TileCollider(this.tiles)
+    this.tileCollider = null
+  }
+
+  setCollisionGrid(matrix) {
+    this.tileCollider = new TileCollider(matrix)
   }
 
   update(deltaTime) {

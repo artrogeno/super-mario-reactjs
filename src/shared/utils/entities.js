@@ -1,7 +1,7 @@
 import Entity from 'shared/utils/entity'
 import Jump from 'shared/utils/traits/jump'
 import Go from 'shared/utils/traits/go'
-import { loadStriteSheet } from 'shared/utils/loaders'
+import { loadStriteSheet } from 'shared/utils/loader'
 import { createAnimation } from 'shared/utils/anime'
 
 const SLOW_DRAG = 1 / 1000

@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 
-import { loadLevel } from 'shared/utils/loaders'
+import { loadLevel } from 'shared/utils/loaders/level'
 import { createMario } from 'shared/utils/entities'
 import { setupKeyboard } from 'shared/utils/input'
 // import { createCollisionLayer, createCameraLayer } from 'shared/utils/layers'
